@@ -1,0 +1,48 @@
+name: リファクタリング
+description: 仕様変更を伴わないコードの整理
+title: "refactor: ♻️ "
+labels: ["refactor"]
+body:
+  - type: textarea
+    id: objective
+    attributes:
+      label: 目的
+      description: この issue で達成したい目的を簡潔に説明してください
+    validations:
+      required: true
+  - type: textarea
+    id: tasks
+    attributes:
+      label: 作業内容
+      description: チェックボックス形式で作業を分解してください
+      value: |
+        - [ ] 対象範囲の把握
+        - [ ] 整理の実施
+        - [ ] テストで振る舞いの不変を確認
+    validations:
+      required: false
+  - type: textarea
+    id: files
+    attributes:
+      label: 主要な関連ファイル
+      description: 変更・追加される主要なファイルを記載してください
+    validations:
+      required: false
+  - type: textarea
+    id: dod
+    attributes:
+      label: 完了の定義
+      description: どうなったら完了かを記載してください
+      value: |
+        - [ ] 外部から見た振る舞いが変わっていないこと
+        - [ ] 既存テストが通ること
+        - [ ] 整理の意図がコードから読み取れること
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: 追加情報
+      description: スクリーンショット、設計図、参考資料などがあれば記載してください
+    validations:
+      required: false

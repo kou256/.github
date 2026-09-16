@@ -1,0 +1,44 @@
+name: バグ修正
+description: バグの報告と修正
+title: "fix: 🐛 "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: steps
+    attributes:
+      label: 発生状況
+      description: バグが発生する具体的な手順を記載してください
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待される動作
+      description: 正常に動作した場合の期待される結果を記載してください
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 実際の動作
+      description: 現在のバグの動作を記載してください
+    validations:
+      required: true
+  - type: textarea
+    id: files
+    attributes:
+      label: 主要な関連ファイル
+      description: 修正が必要なファイルが分かっていれば記載してください
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: 追加情報
+      description: スクリーンショット、エラーログ、環境情報などがあれば記載してください
+    validations:
+      required: false

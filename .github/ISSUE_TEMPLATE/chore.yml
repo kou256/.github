@@ -1,0 +1,46 @@
+name: その他タスク
+description: ビルドプロセスや補助ツール、設定などの変更
+title: "chore: 🔧 "
+labels: ["chore"]
+body:
+  - type: textarea
+    id: objective
+    attributes:
+      label: 目的
+      description: この issue で達成したい目的を簡潔に説明してください
+    validations:
+      required: true
+  - type: textarea
+    id: tasks
+    attributes:
+      label: 作業内容
+      description: チェックボックス形式で作業を分解してください
+      value: |
+        - [ ] タスク1
+        - [ ] タスク2
+    validations:
+      required: false
+  - type: textarea
+    id: files
+    attributes:
+      label: 主要な関連ファイル
+      description: 変更・追加される主要なファイルを記載してください
+    validations:
+      required: false
+  - type: textarea
+    id: dod
+    attributes:
+      label: 完了の定義
+      description: どうなったら完了かを記載してください
+      value: |
+        - [ ] 設定が正常に動作すること
+        - [ ] 動作確認が完了していること
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: 追加情報
+      description: スクリーンショット、設計図、参考資料などがあれば記載してください
+    validations:
+      required: false

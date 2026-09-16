@@ -1,0 +1,46 @@
+name: ドキュメント
+description: ドキュメントの作成・更新
+title: "docs: 📝 "
+labels: ["documentation"]
+body:
+  - type: textarea
+    id: objective
+    attributes:
+      label: 目的
+      description: この issue で達成したい目的を簡潔に説明してください
+    validations:
+      required: true
+  - type: textarea
+    id: tasks
+    attributes:
+      label: 作業内容
+      description: チェックボックス形式で作業を分解してください
+      value: |
+        - [ ] 構成案の作成
+        - [ ] ドラフトの作成
+        - [ ] レビューと修正
+    validations:
+      required: false
+  - type: textarea
+    id: files
+    attributes:
+      label: 主要な関連ファイル
+      description: 変更・追加される主要なファイルを記載してください
+    validations:
+      required: false
+  - type: textarea
+    id: dod
+    attributes:
+      label: 完了の定義
+      description: どうなったら完了かを記載してください
+      value: |
+        - [ ] ドキュメントが更新されていること
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: 追加情報
+      description: スクリーンショット、設計図、参考資料などがあれば記載してください
+    validations:
+      required: false
