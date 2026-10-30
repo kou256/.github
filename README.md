@@ -38,3 +38,22 @@ gh label clone kou256/template --repo kou256/<name> --force
 ```
 
 Renovate はオンボーディング時にこのファイルを自動検出します。Renovate App をこのリポジトリにもインストールしておく必要があります。
+
+### 自動マージ
+
+| 更新 | PR を出すタイミング | マージ |
+|---|---|---|
+| patch / minor（脆弱性以外） | 毎週月曜 9:00 前（UTC。`timezone` は未設定） | CI のステータスチェックがすべて成功したあと、Renovate が PR をマージする |
+| major（脆弱性以外） | 同上。ただし Dependency Dashboard で承認するまで PR は作られない | 自動マージしない |
+| 脆弱性の patch / minor | schedule を待たず、検知後すぐ。グループ「non-major dependencies」にも入れない | 上と同じく、チェック成功後に自動マージ |
+| 脆弱性の major | 上と同じくすぐ PR を出す（Dashboard 承認は不要） | 自動マージしない |
+
+自動マージは GitHub の Auto-merge（`platformAutomerge`）ではなく、Renovate が次回実行時に PR をマージする（`automergeType: "pr"`、`platformAutomerge: false`）。即時ではない。チェックが付いていない、失敗している、まだ走っている、のいずれかならマージしない。
+
+各リポジトリ側で必要な設定:
+
+- Renovate の PR に対して成功するステータスチェック（CI）があること。チェックが無いリポジトリはマージされない。
+- Renovate App にその PR をマージできる権限があること。ブランチ保護でレビュー必須にしている場合は、Renovate App を必須レビューのバイパス対象に入れないと自動マージは止まる。
+- 脆弱性 PR を出すには、Dependency graph と Dependabot alerts を有効にし、Renovate App に Dependabot alerts の読み取り権限が必要。
+
+`platformAutomerge` を `true` に変える場合は、各リポジトリで GitHub の Allow auto-merge を有効にし、ブランチ保護の「Require status checks to pass before merging」で必須チェックを1つ以上選ぶこと。必須チェックが無いと、CI が走る前や失敗した状態でもマージされ得る。
