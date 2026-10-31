@@ -1,18 +1,85 @@
 {
   "extends": ["config:recommended"],
   "schedule": ["before 9am on monday"],
+  "semanticCommits": "enabled",
+  "semanticCommitType": "deps",
+  "semanticCommitScope": null,
+  "commitMessageLowerCase": "never",
+  "commitMessagePrefix": "deps: ⬆️",
+  "commitMessageAction": "",
+  "commitMessageTopic": "{{{depName}}} を",
+  "commitMessageExtra": "{{#if isPinDigest}}{{{newDigestShort}}}{{else}}{{#if isMajor}}{{prettyNewMajor}}{{else}}{{#if isSingleVersion}}{{prettyNewVersion}}{{else}}{{#if newValue}}{{{newValue}}}{{else}}{{{newDigestShort}}}{{/if}}{{/if}}{{/if}}{{/if}} に更新{{#if isVulnerabilityAlert}}（脆弱性）{{/if}}",
+  "group": {
+    "commitMessageAction": "",
+    "commitMessageTopic": "{{{groupName}}} の更新",
+    "commitMessageExtra": ""
+  },
   "vulnerabilityAlerts": {
     "schedule": [],
     "dependencyDashboardApproval": false,
-    "prCreation": "immediate"
+    "prCreation": "immediate",
+    "commitMessageSuffix": ""
+  },
+  "digest": {
+    "commitMessageAction": "",
+    "commitMessageTopic": "{{{depName}}} のダイジェストを",
+    "commitMessageExtra": "{{{newDigestShort}}} に更新{{#if isVulnerabilityAlert}}（脆弱性）{{/if}}"
+  },
+  "pin": {
+    "commitMessageAction": "",
+    "commitMessageTopic": "{{{depName}}} を",
+    "commitMessageExtra": "{{#if isSingleVersion}}{{prettyNewVersion}}{{else}}{{{newValue}}}{{/if}} に固定",
+    "group": {
+      "commitMessageAction": "",
+      "commitMessageTopic": "依存関係のバージョン固定",
+      "commitMessageExtra": ""
+    }
+  },
+  "pinDigest": {
+    "commitMessageAction": "",
+    "commitMessageTopic": "{{{depName}}} のダイジェストを",
+    "commitMessageExtra": "{{{newDigestShort}}} に固定",
+    "group": {
+      "commitMessageAction": "",
+      "commitMessageTopic": "依存関係のバージョン固定",
+      "commitMessageExtra": ""
+    }
+  },
+  "lockFileMaintenance": {
+    "commitMessagePrefix": "deps: ⬆️",
+    "commitMessageAction": "ロックファイルのメンテナンス",
+    "semanticCommitType": "deps",
+    "semanticCommitScope": null
+  },
+  "replacement": {
+    "commitMessageAction": "",
+    "commitMessageTopic": "{{{depName}}} を",
+    "commitMessageExtra": "{{{newName}}} {{#if isMajor}}{{{prettyNewMajor}}}{{else}}{{#if isSingleVersion}}{{{prettyNewVersion}}}{{else}}{{{newValue}}}{{/if}}{{/if}} に置換"
+  },
+  "rollback": {
+    "semanticCommitType": "deps",
+    "commitMessageAction": "",
+    "commitMessageTopic": "{{{depName}}} を",
+    "commitMessageExtra": "{{#if isSingleVersion}}{{prettyNewVersion}}{{else}}{{#if newValue}}{{{newValue}}}{{else}}{{prettyNewVersion}}{{/if}}{{/if}} へロールバック"
   },
   "packageRules": [
+    {
+      "matchPackageNames": ["*"],
+      "semanticCommitType": "deps",
+      "semanticCommitScope": null,
+      "commitMessagePrefix": "deps: ⬆️"
+    },
     {
       "matchUpdateTypes": ["patch", "minor"],
       "groupName": "non-major dependencies",
       "automerge": true,
       "automergeType": "pr",
-      "platformAutomerge": false
+      "platformAutomerge": false,
+      "group": {
+        "commitMessageAction": "",
+        "commitMessageTopic": "非メジャー依存関係の更新",
+        "commitMessageExtra": ""
+      }
     },
     {
       "matchUpdateTypes": ["major"],
