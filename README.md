@@ -57,3 +57,27 @@ Renovate はオンボーディング時にこのファイルを自動検出し�
 - 脆弱性 PR を出すには、Dependency graph と Dependabot alerts を有効にし、Renovate App に Dependabot alerts の読み取り権限が必要。
 
 `platformAutomerge` を `true` に変える場合は、各リポジトリで GitHub の Allow auto-merge を有効にし、ブランチ保護の「Require status checks to pass before merging」で必須チェックを1つ以上選ぶこと。必須チェックが無いと、CI が走る前や失敗した状態でもマージされ得る。
+
+### コミットメッセージ
+
+コミットメッセージと PR タイトルは、種類 `deps` と更新の絵文字 `⬆️` を組み合わせる。説明は日本語の体言止めにする。パッケージ名の大文字小文字は維持する（`commitMessageLowerCase: "never"`）。
+
+`config:recommended` は本番依存を `fix(deps):`、それ以外を `chore(deps):` にする。このプリセットはそれを上書きし、依存関係の変更はすべて `deps:` にする。
+
+| 更新 | タイトル |
+|---|---|
+| 個別の minor / patch | `deps: ⬆️ eslint を v9.14.0 に更新` |
+| 個別の major | `deps: ⬆️ webpack を v5 に更新`（メジャー番号のみ。同一メジャー内の追従でタイトルを変えない） |
+| patch / minor を複数まとめたとき | `deps: ⬆️ 非メジャー依存関係の更新` |
+| それ以外のグループ（複数件） | `deps: ⬆️ <groupName> の更新` |
+| ダイジェスト更新 | `deps: ⬆️ node のダイジェストを 1a2b3c4 に更新` |
+| ピン（1件） | `deps: ⬆️ lodash を v4.17.21 に固定` |
+| ピン（複数） | `deps: ⬆️ 依存関係のバージョン固定` |
+| ロックファイルメンテナンス | `deps: ⬆️ ロックファイルのメンテナンス` |
+| ロールバック | `deps: ⬆️ eslint を v8.57.0 へロールバック` |
+| パッケージ置換 | `deps: ⬆️ left-pad を string-width v5.1.2 に置換` |
+| 脆弱性 | 上記の末尾に `（脆弱性）`。例: `deps: ⬆️ minimist を v1.2.8 に更新（脆弱性）` |
+
+グループに属していても、そのブランチの依存が1件だけのときは個別のタイトルになる。
+
+依存関係の追加（`deps: ➕`）と削除（`deps: ➖`）に当たる更新種別は Renovate にない。置換も依存関係の更新として `deps: ⬆️` を使う。
