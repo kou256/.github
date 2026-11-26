@@ -1,6 +1,8 @@
 {
   "extends": ["config:recommended"],
   "schedule": ["before 9am on monday"],
+  "minimumReleaseAge": "3 days",
+  "internalChecksFilter": "strict",
   "semanticCommits": "enabled",
   "semanticCommitType": "deps",
   "semanticCommitScope": null,
