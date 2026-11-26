@@ -43,10 +43,14 @@ Renovate はオンボーディング時にこのファイルを自動検出し�
 
 | 更新 | PR を出すタイミング | マージ |
 |---|---|---|
-| patch / minor（脆弱性以外） | 毎週月曜 9:00 前（UTC。`timezone` は未設定） | CI のステータスチェックがすべて成功したあと、Renovate が PR をマージする |
+| patch / minor（脆弱性以外） | 公開から 3 日以上経った版だけ。PR は毎週月曜 9:00 前（UTC。`timezone` は未設定） | CI のステータスチェックがすべて成功したあと、Renovate が PR をマージする |
 | major（脆弱性以外） | 同上。ただし Dependency Dashboard で承認するまで PR は作られない | 自動マージしない |
-| 脆弱性の patch / minor | schedule を待たず、検知後すぐ。グループ「non-major dependencies」にも入れない | 上と同じく、チェック成功後に自動マージ |
+| 脆弱性の patch / minor | schedule も公開からの経過日数も待たず、検知後すぐ。グループ「non-major dependencies」にも入れない | 上と同じく、チェック成功後に自動マージ |
 | 脆弱性の major | 上と同じくすぐ PR を出す（Dashboard 承認は不要） | 自動マージしない |
+
+`minimumReleaseAge` は `"3 days"`。`internalChecksFilter` は `"strict"` で、3 日経つ前はブランチを作らない（既定値と同じ。明示してある）。既存の `packageRules` は `minimumReleaseAge` を持たないので、この 3 日は patch / minor / major にそのまま効く。脆弱性 PR は `vulnerabilityAlerts` の既定 `minimumReleaseAge: null` が優先され、待たない。既存の `vulnerabilityAlerts` ブロックはそのキーを上書きしていない。
+
+ロックファイルメンテナンスはタイムスタンプが無いので `minimumReleaseAge` を `null` にし、ブランチを止めない。ダイジェストと pinDigest は `minimumReleaseAgeBehaviour` を `timestamp-optional` にする。タイムスタンプがあるレジストリは 3 日待ち、GHCR / Quay / ECR のように無いものは止めない。`minimumReleaseAgePackageManagerSync` は有効にしていない。既定では Renovate はこの 3 日を pnpm に渡さず、pnpm は自分の設定（pnpm 12 は 24 時間）だけを見る。
 
 自動マージは GitHub の Auto-merge（`platformAutomerge`）ではなく、Renovate が次回実行時に PR をマージする（`automergeType: "pr"`、`platformAutomerge: false`）。即時ではない。チェックが付いていない、失敗している、まだ走っている、のいずれかならマージしない。
 
