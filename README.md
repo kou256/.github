@@ -50,6 +50,8 @@ Renovate はオンボーディング時にこのファイルを自動検出し�
 
 `minimumReleaseAge` は `"3 days"`。`internalChecksFilter` は `"strict"` で、3 日経つ前はブランチを作らない（既定値と同じ。明示してある）。既存の `packageRules` は `minimumReleaseAge` を持たないので、この 3 日は patch / minor / major にそのまま効く。脆弱性 PR は `vulnerabilityAlerts` の既定 `minimumReleaseAge: null` が優先され、待たない。既存の `vulnerabilityAlerts` ブロックはそのキーを上書きしていない。
 
+ロックファイルメンテナンスはタイムスタンプが無いので `minimumReleaseAge` を `null` にし、ブランチを止めない。ダイジェストと pinDigest は `minimumReleaseAgeBehaviour` を `timestamp-optional` にする。タイムスタンプがあるレジストリは 3 日待ち、GHCR / Quay / ECR のように無いものは止めない。`minimumReleaseAgePackageManagerSync` は有効にしていない。既定では Renovate はこの 3 日を pnpm に渡さず、pnpm は自分の設定（pnpm 12 は 24 時間）だけを見る。
+
 自動マージは GitHub の Auto-merge（`platformAutomerge`）ではなく、Renovate が次回実行時に PR をマージする（`automergeType: "pr"`、`platformAutomerge: false`）。即時ではない。チェックが付いていない、失敗している、まだ走っている、のいずれかならマージしない。
 
 各リポジトリ側で必要な設定:

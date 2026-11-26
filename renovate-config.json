@@ -25,7 +25,8 @@
   "digest": {
     "commitMessageAction": "",
     "commitMessageTopic": "{{{depName}}} のダイジェストを",
-    "commitMessageExtra": "{{{newDigestShort}}} に更新{{#if isVulnerabilityAlert}}（脆弱性）{{/if}}"
+    "commitMessageExtra": "{{{newDigestShort}}} に更新{{#if isVulnerabilityAlert}}（脆弱性）{{/if}}",
+    "minimumReleaseAgeBehaviour": "timestamp-optional"
   },
   "pin": {
     "commitMessageAction": "",
@@ -41,6 +42,7 @@
     "commitMessageAction": "",
     "commitMessageTopic": "{{{depName}}} のダイジェストを",
     "commitMessageExtra": "{{{newDigestShort}}} に固定",
+    "minimumReleaseAgeBehaviour": "timestamp-optional",
     "group": {
       "commitMessageAction": "",
       "commitMessageTopic": "依存関係のバージョン固定",
@@ -51,7 +53,8 @@
     "commitMessagePrefix": "deps: ⬆️",
     "commitMessageAction": "ロックファイルのメンテナンス",
     "semanticCommitType": "deps",
-    "semanticCommitScope": null
+    "semanticCommitScope": null,
+    "minimumReleaseAge": null
   },
   "replacement": {
     "commitMessageAction": "",
